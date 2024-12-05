@@ -14,12 +14,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.pink[50],
         appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
+          backgroundColor: Colors.pink[50],
         ),
       ),
       home: const HomePage(),
