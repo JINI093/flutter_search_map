@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_search_map/model/map.dart';
+import 'package:flutter_search_map/data/model/map.dart';
 import 'package:test/test.dart';
 
 void main() {
