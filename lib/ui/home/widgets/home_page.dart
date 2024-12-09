@@ -11,6 +11,10 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  void onSearch(String text) {
+    ref.read(homeViewModelProvider.notifier).searchMap(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeViewModelProvider);
@@ -20,6 +24,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
+            onChanged: onSearch,
             decoration: InputDecoration(
               hintText: '지역을 입력해주세요.',
               border:
@@ -33,7 +38,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
       // 검색 결과 리스트
       body: Container(
-        child: const HomeListView(),
+        child: HomeListView(homeState: homeState),
       ),
     );
   }

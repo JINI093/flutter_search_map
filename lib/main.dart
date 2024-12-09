@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_map/ui/home/widgets/home_page.dart';
 
-void main() {
+void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
