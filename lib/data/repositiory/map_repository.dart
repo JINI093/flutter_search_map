@@ -30,5 +30,23 @@ class MapRepository {
     return [];
   }
 
-  getAddressFromCoordinates(double latitude, double longitude) {}
+  Future<String?> getAddressFromCoordinates(double lat, double lon) async {
+    final String vworldApiKey = 'YOUR_VWORLD_API_KEY'; // VWORLD API 키를 입력하세요
+    final url =
+        'http://api.vworld.kr/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lon},${lat}&type=both&format=json&key=$vworldApiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['response']['status'] == 'OK') {
+          final result = data['response']['result'][0];
+          return result['text']; // 전체 주소 반환
+        }
+      }
+    } catch (e) {
+      print('Error getting address: $e');
+    }
+    return null;
+  }
 }

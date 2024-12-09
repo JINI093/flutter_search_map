@@ -46,6 +46,12 @@ class Guidance {
           mapy: map['mapy'],
         );
 
+  // HTML 태그 제거 헬퍼 메서드
+  static String _removeHtmlTags(String text) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return text.replaceAll(exp, '');
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'title': title,

@@ -26,7 +26,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: TextFormField(
             onChanged: onSearch,
             decoration: InputDecoration(
-              hintText: '지역을 입력해주세요.',
+              hintText: '검색어를 입력해 주세요',
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
               filled: true,
@@ -34,8 +34,17 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              ref.read(homeViewModelProvider.notifier).searchCurrentLocation();
+            },
+            icon: const Icon(Icons.gps_fixed),
+          ),
+        ],
       ),
 
+      // 검색 결과 리스트
       // 검색 결과 리스트
       body: Container(
         child: HomeListView(homeState: homeState),
