@@ -7,7 +7,7 @@ class MapRepository {
     final client = http.Client();
     final response = await client.get(
         Uri.parse(
-            'https://openapi.naver.com/v1/search/local.json?query=$query'),
+            'https://openapi.naver.com/v1/search/local.json?query=$query&display=10'),
         headers: {
           'X-Naver-Client-Id': 'zVuJ0Fgn2FXhssUNywCe',
           'X-Naver-Client-Secret': 'dgl8Uq9Woy',
