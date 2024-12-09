@@ -24,28 +24,10 @@ class HomePage extends ConsumerWidget {
         ),
       ),
 
+
       // 검색 결과 리스트
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
-                    height: 120,
-                    width: double.infinity,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      body: Container(
+        child: const HomeListView(),
       ),
     );
   }
