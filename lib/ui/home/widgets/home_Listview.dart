@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_search_map/model/map.dart';
+import 'package:flutter_search_map/data/model/map.dart';
 import 'package:flutter_search_map/ui/home/widgets/home_view_model.dart';
 
 final countProvider = StateProvider<int>((ref) => 10);
@@ -20,7 +20,7 @@ class HomeListView extends ConsumerWidget {
         separatorBuilder: (context, index) => const SizedBox(height: 10),
         itemBuilder: (context, index) {
           final guidance = homeState.guidances[index];
-          return item(context, guidance);
+          return item(context, guidance as Guidance);
         },
       ),
     );

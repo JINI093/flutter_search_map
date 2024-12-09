@@ -1,5 +1,4 @@
-import 'package:flutter_search_map/data/repositiory/map.repositiory.dart';
-import 'package:flutter_search_map/model/map.dart';
+import 'package:flutter_search_map/data/repositiory/map.repository.dart';
 import 'package:test/test.dart';
 
 void main() {

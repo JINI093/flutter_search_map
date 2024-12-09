@@ -1,5 +1,5 @@
-import 'package:flutter_search_map/data/repositiory/map.repositiory.dart';
-import 'package:flutter_search_map/model/map.dart';
+import 'package:flutter_search_map/data/repositiory/map.repository.dart';
+import 'package:flutter_search_map/data/model/map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 1. 상태 클래스 만들기
@@ -18,7 +18,7 @@ class HomeViewModel extends Notifier<HomeState> {
   Future<void> searchMap(String query) async {
     final mapRepository = MapRepository();
     final guidances = await mapRepository.searchMap(query);
-    state = HomeState(guidances);
+    state = HomeState(guidances.cast<Guidance>());
   }
 }
 
