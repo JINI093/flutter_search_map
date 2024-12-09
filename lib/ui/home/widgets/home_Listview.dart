@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_search_map/model/map.dart';
+import 'package:flutter_search_map/ui/home/widgets/home_view_model.dart';
 
 final countProvider = StateProvider<int>((ref) => 10);
 
-class HomeListView extends StatelessWidget {
+class HomeListView extends ConsumerWidget {
   const HomeListView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeState = ref.watch(homeViewModelProvider);
+
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        itemCount: 10,
+        itemCount: homeState.guidances.length,
         separatorBuilder: (context, index) => const SizedBox(height: 10),
-        itemBuilder: (context, index) => item(context, index),
+        itemBuilder: (context, index) {
+          final guidance = homeState.guidances[index];
+          return item(context, guidance);
+        },
       ),
     );
   }
 }
 
-Widget item(BuildContext context, int index) {
+Widget item(BuildContext context, Guidance guidance) {
   try {
     return Container(
       width: double.infinity,
@@ -34,7 +41,7 @@ Widget item(BuildContext context, int index) {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -42,23 +49,23 @@ Widget item(BuildContext context, int index) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '제목',
-            style: TextStyle(
+            guidance.title,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
-            '부제목',
-            style: TextStyle(
+            guidance.category,
+            style: const TextStyle(
               color: Colors.grey,
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
-            '주소',
-            style: TextStyle(
+            guidance.address,
+            style: const TextStyle(
               color: Colors.grey,
             ),
           ),

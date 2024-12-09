@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_search_map/ui/home/widgets/home_view_model.dart';
 import 'home_Listview.dart';
 
-class HomePage extends ConsumerWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  @override
+  Widget build(BuildContext context) {
+    final homeState = ref.watch(homeViewModelProvider);
     return Scaffold(
       // 검색 바
       appBar: AppBar(
@@ -23,7 +30,6 @@ class HomePage extends ConsumerWidget {
           ),
         ),
       ),
-
 
       // 검색 결과 리스트
       body: Container(
