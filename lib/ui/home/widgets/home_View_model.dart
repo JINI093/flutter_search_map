@@ -1,6 +1,6 @@
-import 'package:flutter_search_map/data/repositiory/map.repository.dart';
 import 'package:flutter_search_map/data/model/map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_search_map/data/repositiory/map_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
 // 1. 상태 클래스
