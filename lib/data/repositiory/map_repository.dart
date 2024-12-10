@@ -100,4 +100,29 @@ class MapRepository {
     }
     return null;
   }
+
+  Future<List<String>> findByLocation(double lat, double lng) async {
+    try {
+      final url = Uri.parse(
+          'http://api.vworld.kr/req/address?service=address&request=getAddress&version=2.0&crs=epsg:4326&point=${lng},${lat}&type=both&zipcode=true&simple=false&key=YOUR_API_KEY');
+
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+
+        if (data['response']['status'] == 'OK') {
+          final List<dynamic> results = data['response']['result'];
+          return results
+              .map((result) => result['text'])
+              .cast<String>()
+              .toList();
+        }
+      }
+      return [];
+    } catch (e) {
+      print('Error in findByLocation: $e');
+      return [];
+    }
+  }
 }

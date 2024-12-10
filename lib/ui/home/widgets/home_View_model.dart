@@ -1,7 +1,7 @@
 import 'package:flutter_search_map/data/model/map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_search_map/data/repositiory/map_repository.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_search_map/data/repositiory/geolocator_helper.dart';
 
 // 1. 상태 클래스
 class HomeState {
@@ -24,38 +24,27 @@ class HomeViewModel extends Notifier<HomeState> {
 
   Future<void> searchCurrentLocation() async {
     try {
-      // 위치 권한 확인
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          print('Location permission denied');
-          return;
+      print('Starting searchCurrentLocation...');
+      final position = await GeolocatorHelper.getCurrentLocation();
+      print('Position received: $position');
+
+      if (position != null) {
+        final mapRepository = MapRepository();
+        final address = await mapRepository.getAddressFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+        print('Address received: $address');
+
+        if (address != null && address.isNotEmpty) {
+          final guidances = await mapRepository.searchMap(address);
+          print('Guidances received: ${guidances.length}');
+          state = HomeState(guidances);
+        } else {
+          print('No address found');
         }
-      }
-
-      // 현재 위치 가져오기
-      final Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      print('Current position: ${position.latitude}, ${position.longitude}');
-
-      // VWORLD API로 주소 가져오기
-      final mapRepository = MapRepository();
-      final address = await mapRepository.getAddressFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
-      print('Retrieved address: $address');
-
-      // 주소로 검색
-      if (address != null) {
-        // 주소에서 검색에 필요한 키워드만 추출 (예: "XX동" 또는 "XX로")
-        final searchKeyword = extractSearchKeyword(address);
-        print('Searching with keyword: $searchKeyword');
-        await searchMap(searchKeyword);
       } else {
-        print('No address found');
+        print('No position obtained');
       }
     } catch (e) {
       print('Error in searchCurrentLocation: $e');
